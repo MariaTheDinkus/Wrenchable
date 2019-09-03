@@ -4,10 +4,8 @@ import com.zundrel.wrenchable.block.BlockWrenchableListener;
 import com.zundrel.wrenchable.block.PropertyWrenchableListener;
 import com.zundrel.wrenchable.wrench.Wrench;
 import com.zundrel.wrenchable.wrench.Wrenchable;
-import grondag.fermion.modkeys.api.ModKeys;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.BlockRotation;
 
 public class WrenchableEvents {
     public static void init() {
@@ -18,6 +16,10 @@ public class WrenchableEvents {
 
                     wrench.onWrenched(world, playerEntity.getStackInHand(hand), playerEntity, blockHitResult);
                     ((Wrenchable) world.getBlockState(blockHitResult.getBlockPos()).getBlock()).onWrenched(world, playerEntity, blockHitResult);
+
+                    if (world.getBlockEntity(blockHitResult.getBlockPos()) != null && world.getBlockEntity(blockHitResult.getBlockPos()) instanceof Wrenchable) {
+                        ((Wrenchable) world.getBlockEntity(blockHitResult.getBlockPos())).onWrenched(world, playerEntity, blockHitResult);
+                    }
                 } else if (world.getBlockEntity(blockHitResult.getBlockPos()) != null && world.getBlockEntity(blockHitResult.getBlockPos()) instanceof Wrenchable) {
                     Wrench wrench = (Wrench) playerEntity.getStackInHand(hand).getItem();
 
