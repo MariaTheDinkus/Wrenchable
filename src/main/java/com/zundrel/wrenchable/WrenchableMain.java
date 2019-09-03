@@ -1,6 +1,8 @@
 package com.zundrel.wrenchable;
 
 import com.zundrel.wrenchable.block.PropertyWrenchableListener;
+import com.zundrel.wrenchable.wrench.WrenchListener;
+import com.zundrel.wrenchable.wrench.WrenchUtilities;
 import grondag.fermion.modkeys.api.ModKeys;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.block.Block;
@@ -8,6 +10,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.block.enums.ChestType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Identifier;
@@ -25,7 +28,7 @@ public class WrenchableMain implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-        FACING = Registry.register(WrenchableRegistry.PROPERTY_LISTENERS, new Identifier(MODID, "facing"), new PropertyWrenchableListener(Properties.FACING) {
+	    FACING = Registry.register(WrenchableRegistry.PROPERTY_LISTENERS, new Identifier(MODID, "facing"), new PropertyWrenchableListener(Properties.FACING) {
             @Override
             public void onWrenched(World world, PlayerEntity player, BlockHitResult result) {
                 BlockPos pos = result.getBlockPos();
