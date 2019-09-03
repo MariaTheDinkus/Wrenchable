@@ -1,9 +1,9 @@
 package com.zundrel.wrenchable.block;
 
-import com.zundrel.wrenchable.wrench.Wrenchable;
+import com.zundrel.wrenchable.wrench.BlockWrenchable;
 import net.minecraft.state.property.Property;
 
-public abstract class PropertyListener implements Wrenchable {
+public abstract class PropertyListener implements BlockWrenchable {
     private Property property;
 
     public PropertyListener(Property property) {

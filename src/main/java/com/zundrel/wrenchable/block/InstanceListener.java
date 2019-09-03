@@ -1,9 +1,8 @@
 package com.zundrel.wrenchable.block;
 
-import com.zundrel.wrenchable.wrench.Wrenchable;
-import net.minecraft.block.Block;
+import com.zundrel.wrenchable.wrench.BlockWrenchable;
 
-public abstract class InstanceListener implements Wrenchable {
+public abstract class InstanceListener implements BlockWrenchable {
     private Class block;
 
     public InstanceListener(Class block) {
