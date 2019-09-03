@@ -1,22 +1,19 @@
 package com.zundrel.wrenchable.block.defaults;
 
-import com.zundrel.wrenchable.block.BlockInstanceListener;
-import com.zundrel.wrenchable.block.PropertyListener;
+import com.zundrel.wrenchable.block.InstanceListener;
 import grondag.fermion.modkeys.api.ModKeys;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.state.property.Properties;
-import net.minecraft.text.Text;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class SignPropertyListener extends BlockInstanceListener {
-    public SignPropertyListener() {
+public class SignInstanceListener extends InstanceListener {
+    public SignInstanceListener() {
         super(AbstractSignBlock.class);
     }
 

@@ -1,31 +1,21 @@
 package com.zundrel.wrenchable;
 
-import com.zundrel.wrenchable.block.BlockInstanceListener;
+import com.zundrel.wrenchable.block.InstanceListener;
 import com.zundrel.wrenchable.block.PropertyListener;
+import com.zundrel.wrenchable.block.defaults.EndPortalFrameInstanceListener;
 import com.zundrel.wrenchable.block.defaults.FacingPropertyListener;
 import com.zundrel.wrenchable.block.defaults.RotationPropertyListener;
-import com.zundrel.wrenchable.block.defaults.SignPropertyListener;
-import com.zundrel.wrenchable.wrench.WrenchListener;
-import grondag.fermion.modkeys.api.ModKeys;
+import com.zundrel.wrenchable.block.defaults.SignInstanceListener;
 import net.fabricmc.api.ModInitializer;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.SignBlockEntity;
-import net.minecraft.block.enums.ChestType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Items;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
 
 public class WrenchableMain implements ModInitializer {
     public static String MODID = "wrenchable";
 
-    public static BlockInstanceListener SIGN_LISTENER;
+    public static InstanceListener SIGN_LISTENER;
+    public static InstanceListener END_PORTAL_FRAME_LISTENER;
 
     public static PropertyListener ROTATION_LISTENER;
     public static PropertyListener FACING_LISTENER;
@@ -33,7 +23,9 @@ public class WrenchableMain implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-	    SIGN_LISTENER = Registry.register(WrenchableRegistry.BLOCK_INSTANCE_LISTENERS, new Identifier(MODID, "sign"), new SignPropertyListener());
+	    SIGN_LISTENER = Registry.register(WrenchableRegistry.BLOCK_INSTANCE_LISTENERS, new Identifier(MODID, "sign"), new SignInstanceListener());
+
+        END_PORTAL_FRAME_LISTENER = Registry.register(WrenchableRegistry.BLOCK_INSTANCE_LISTENERS, new Identifier(MODID, "eye"), new EndPortalFrameInstanceListener());
 
 	    ROTATION_LISTENER = Registry.register(WrenchableRegistry.PROPERTY_LISTENERS, new Identifier(MODID, "rotation"), new RotationPropertyListener());
 

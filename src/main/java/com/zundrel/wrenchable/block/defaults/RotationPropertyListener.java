@@ -4,6 +4,7 @@ import com.zundrel.wrenchable.block.PropertyListener;
 import grondag.fermion.modkeys.api.ModKeys;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.SkullBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.property.Properties;
 import net.minecraft.state.property.Property;
@@ -26,7 +27,10 @@ public class RotationPropertyListener extends PropertyListener {
         Block block = state.getBlock();
 
         if (ModKeys.isAltPressed(player)) {
-            world.setBlockState(pos, state.with(Properties.ROTATION, MathHelper.floor((double)((player.yaw) * 16.0F / 360.0F) + 0.5D) & 15));
+            if (block instanceof SkullBlock)
+                world.setBlockState(pos, state.with(Properties.ROTATION, MathHelper.floor((double)((player.yaw) * 16.0F / 360.0F) + 0.5D) & 15));
+            else
+                world.setBlockState(pos, state.with(Properties.ROTATION, MathHelper.floor((double)((180.0F + player.yaw) * 16.0F / 360.0F) + 0.5D) & 15));
             world.updateNeighbor(pos, block, pos);
             return;
         }

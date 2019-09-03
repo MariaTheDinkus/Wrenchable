@@ -1,6 +1,6 @@
 package com.zundrel.wrenchable;
 
-import com.zundrel.wrenchable.block.BlockInstanceListener;
+import com.zundrel.wrenchable.block.InstanceListener;
 import com.zundrel.wrenchable.block.BlockListener;
 import com.zundrel.wrenchable.block.PropertyListener;
 import com.zundrel.wrenchable.wrench.Wrench;
@@ -15,7 +15,7 @@ import net.minecraft.util.registry.Registry;
 
 public class WrenchableRegistry {
     public static final DefaultedRegistry<BlockListener> BLOCK_LISTENERS = register("block_wrenchable", new DefaultedRegistry<>(""));
-    public static final DefaultedRegistry<BlockInstanceListener> BLOCK_INSTANCE_LISTENERS = register("block_instance_wrenchable", new DefaultedRegistry<>(""));
+    public static final DefaultedRegistry<InstanceListener> BLOCK_INSTANCE_LISTENERS = register("block_instance_wrenchable", new DefaultedRegistry<>(""));
     public static final DefaultedRegistry<PropertyListener> PROPERTY_LISTENERS = register("property_wrenchable", new DefaultedRegistry<>(""));
     public static final DefaultedRegistry<WrenchListener> WRENCH_LISTENERS = register("wrench", new DefaultedRegistry<>(""));
 
@@ -32,7 +32,7 @@ public class WrenchableRegistry {
         return findBlockWrenchable(block) != null;
     }
 
-    public static BlockInstanceListener findBlockInstanceWrenchable(Block block) {
+    public static InstanceListener findBlockInstanceWrenchable(Block block) {
         return BLOCK_INSTANCE_LISTENERS.stream().filter(it -> it.getBlock().isInstance(block)).findAny().orElse(null);
     }
 
