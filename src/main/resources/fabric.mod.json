@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "wrenchable",
+  "version": "${version}",
+
+  "name": "Wrenchable",
+  "description": "A library designed for allowing interactivity of wrenches between various mods.",
+  "authors": [
+    "Zundrel"
+  ],
+  "contact": {
+    "homepage": "http://zundrel.com/",
+    "sources": "https://github.com/Zundrel/Wrenchable-API",
+	"issues": "https://github.com/Zundrel/Wrenchable-API/issues"
+  },
+
+  "license": "MIT",
+  "icon": "assets/wrenchable/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.zundrel.wrenchable.WrenchableMain"
+    ]
+  },
+  "mixins": [
+    "wrenchable.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.6.0",
+    "fabric": "*"
+  },
+  "custom": {
+    "modmenu:api": true,
+    "modmenu:clientsideOnly": false
+  }
+}
