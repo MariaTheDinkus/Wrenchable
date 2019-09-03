@@ -1,7 +1,7 @@
 package com.zundrel.wrenchable;
 
-import com.zundrel.wrenchable.block.BlockWrenchableListener;
-import com.zundrel.wrenchable.block.PropertyWrenchableListener;
+import com.zundrel.wrenchable.block.BlockListener;
+import com.zundrel.wrenchable.block.PropertyListener;
 import com.zundrel.wrenchable.wrench.Wrench;
 import com.zundrel.wrenchable.wrench.WrenchUtilities;
 import com.zundrel.wrenchable.wrench.Wrenchable;
@@ -31,7 +31,7 @@ public class WrenchableEvents {
 
                     return ActionResult.SUCCESS;
                 } else if (WrenchableRegistry.hasBlockWrenchable(world.getBlockState(blockHitResult.getBlockPos()).getBlock())) {
-                    BlockWrenchableListener wrenchable = WrenchableRegistry.findBlockWrenchable(world.getBlockState(blockHitResult.getBlockPos()).getBlock());
+                    BlockListener wrenchable = WrenchableRegistry.findBlockWrenchable(world.getBlockState(blockHitResult.getBlockPos()).getBlock());
                     Wrench wrench = WrenchUtilities.getWrench(playerEntity.getStackInHand(hand).getItem());
 
                     wrench.onWrenched(world, playerEntity.getStackInHand(hand), playerEntity, blockHitResult);
@@ -39,8 +39,15 @@ public class WrenchableEvents {
                     wrenchable.onWrenched(world, playerEntity, blockHitResult);
 
                     return ActionResult.SUCCESS;
+                } if (WrenchableRegistry.isBlockInstanceWrenchable(world.getBlockState(blockHitResult.getBlockPos()).getBlock())) {
+                    Wrench wrench = WrenchUtilities.getWrench(playerEntity.getStackInHand(hand).getItem());
+
+                    wrench.onWrenched(world, playerEntity.getStackInHand(hand), playerEntity, blockHitResult);
+                    WrenchableRegistry.findBlockInstanceWrenchable(world.getBlockState(blockHitResult.getBlockPos()).getBlock()).onWrenched(world, playerEntity, blockHitResult);
+
+                    return ActionResult.SUCCESS;
                 } else {
-                    for (PropertyWrenchableListener wrenchable : WrenchableRegistry.PROPERTY_LISTENERS) {
+                    for (PropertyListener wrenchable : WrenchableRegistry.PROPERTY_LISTENERS) {
                         if (world.getBlockState(blockHitResult.getBlockPos()).contains(wrenchable.getProperty())) {
                             Wrench wrench = WrenchUtilities.getWrench(playerEntity.getStackInHand(hand).getItem());
 

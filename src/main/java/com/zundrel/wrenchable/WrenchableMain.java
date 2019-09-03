@@ -1,13 +1,15 @@
 package com.zundrel.wrenchable;
 
-import com.zundrel.wrenchable.block.PropertyWrenchableListener;
+import com.zundrel.wrenchable.block.BlockInstanceListener;
+import com.zundrel.wrenchable.block.PropertyListener;
+import com.zundrel.wrenchable.block.defaults.FacingPropertyListener;
+import com.zundrel.wrenchable.block.defaults.RotationPropertyListener;
+import com.zundrel.wrenchable.block.defaults.SignPropertyListener;
 import com.zundrel.wrenchable.wrench.WrenchListener;
-import com.zundrel.wrenchable.wrench.WrenchUtilities;
 import grondag.fermion.modkeys.api.ModKeys;
 import net.fabricmc.api.ModInitializer;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ChestBlock;
+import net.minecraft.block.*;
+import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.block.enums.ChestType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
@@ -23,85 +25,21 @@ import net.minecraft.world.World;
 public class WrenchableMain implements ModInitializer {
     public static String MODID = "wrenchable";
 
-    public static PropertyWrenchableListener FACING;
-    public static PropertyWrenchableListener HORIZONTAL_FACING;
+    public static BlockInstanceListener SIGN_LISTENER;
+
+    public static PropertyListener ROTATION_LISTENER;
+    public static PropertyListener FACING_LISTENER;
+    public static PropertyListener HORIZONTAL_FACING_LISTENER;
 
 	@Override
 	public void onInitialize() {
-	    FACING = Registry.register(WrenchableRegistry.PROPERTY_LISTENERS, new Identifier(MODID, "facing"), new PropertyWrenchableListener(Properties.FACING) {
-            @Override
-            public void onWrenched(World world, PlayerEntity player, BlockHitResult result) {
-                BlockPos pos = result.getBlockPos();
-                BlockState state = world.getBlockState(pos);
-                Direction direction = state.get(Properties.FACING);
-                Block block = state.getBlock();
+	    SIGN_LISTENER = Registry.register(WrenchableRegistry.BLOCK_INSTANCE_LISTENERS, new Identifier(MODID, "sign"), new SignPropertyListener());
 
-                if (ModKeys.isAltPressed(player)) {
-                    world.setBlockState(pos, state.with(Properties.FACING, result.getSide()));
-                    world.updateNeighbor(pos, block, pos);
-                    return;
-                }
+	    ROTATION_LISTENER = Registry.register(WrenchableRegistry.PROPERTY_LISTENERS, new Identifier(MODID, "rotation"), new RotationPropertyListener());
 
-                if (player.isSneaking()) {
-                    if (direction != Direction.UP && direction != Direction.DOWN) {
-                        if (!state.rotate(BlockRotation.COUNTERCLOCKWISE_90).canPlaceAt(world, pos))
-                            return;
+	    FACING_LISTENER = Registry.register(WrenchableRegistry.PROPERTY_LISTENERS, new Identifier(MODID, "facing"), new FacingPropertyListener(Properties.FACING));
 
-                        world.setBlockState(pos, state.rotate(BlockRotation.COUNTERCLOCKWISE_90));
-                        world.updateNeighbor(pos, block, pos);
-                    } else {
-                        world.setBlockState(pos, state.with(Properties.FACING, direction.getOpposite()));
-                        world.updateNeighbor(pos, block, pos);
-                    }
-                } else {
-                    if (direction != Direction.UP && direction != Direction.DOWN) {
-                        if (!state.rotate(BlockRotation.CLOCKWISE_90).canPlaceAt(world, pos))
-                            return;
-
-                        world.setBlockState(pos, state.rotate(BlockRotation.CLOCKWISE_90));
-                        world.updateNeighbor(pos, block, pos);
-                    } else {
-                        world.setBlockState(pos, state.with(Properties.FACING, direction.getOpposite()));
-                        world.updateNeighbor(pos, block, pos);
-                    }
-                }
-            }
-        });
-
-        HORIZONTAL_FACING = Registry.register(WrenchableRegistry.PROPERTY_LISTENERS, new Identifier(MODID, "horizontal_facing"), new PropertyWrenchableListener(Properties.HORIZONTAL_FACING) {
-            @Override
-            public void onWrenched(World world, PlayerEntity player, BlockHitResult result) {
-                BlockPos pos = result.getBlockPos();
-                BlockState state = world.getBlockState(pos);
-                Block block = state.getBlock();
-
-                if (block instanceof ChestBlock && state.get(Properties.CHEST_TYPE) != ChestType.SINGLE)
-                    return;
-
-                if (ModKeys.isAltPressed(player) && result.getSide() != Direction.UP && result.getSide() != Direction.DOWN) {
-                    if (!state.with(Properties.HORIZONTAL_FACING, result.getSide()).canPlaceAt(world, pos))
-                        return;
-
-                    world.setBlockState(pos, state.with(Properties.HORIZONTAL_FACING, result.getSide()));
-                    world.updateNeighbor(pos, block, pos);
-                    return;
-                }
-
-                if (player.isSneaking()) {
-                    if (!state.rotate(BlockRotation.COUNTERCLOCKWISE_90).canPlaceAt(world, pos))
-                        return;
-
-                    world.setBlockState(pos, state.rotate(BlockRotation.COUNTERCLOCKWISE_90));
-                    world.updateNeighbor(pos, block, pos);
-                } else {
-                    if (!state.rotate(BlockRotation.CLOCKWISE_90).canPlaceAt(world, pos))
-                        return;
-
-                    world.setBlockState(pos, state.rotate(BlockRotation.CLOCKWISE_90));
-                    world.updateNeighbor(pos, block, pos);
-                }
-            }
-        });
+        HORIZONTAL_FACING_LISTENER = Registry.register(WrenchableRegistry.PROPERTY_LISTENERS, new Identifier(MODID, "horizontal_facing"), new FacingPropertyListener(Properties.HORIZONTAL_FACING));
 
         WrenchableEvents.init();
 	}

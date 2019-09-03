@@ -3,10 +3,10 @@ package com.zundrel.wrenchable.block;
 import com.zundrel.wrenchable.wrench.Wrenchable;
 import net.minecraft.state.property.Property;
 
-public abstract class PropertyWrenchableListener implements Wrenchable {
+public abstract class PropertyListener implements Wrenchable {
     private Property property;
 
-    public PropertyWrenchableListener(Property property) {
+    public PropertyListener(Property property) {
         this.property = property;
     }
 
