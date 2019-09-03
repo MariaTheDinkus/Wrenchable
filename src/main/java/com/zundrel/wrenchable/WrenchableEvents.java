@@ -8,53 +8,53 @@ import com.zundrel.wrenchable.wrench.WrenchUtilities;
 import com.zundrel.wrenchable.wrench.BlockWrenchable;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.math.BlockPos;
 
 public class WrenchableEvents {
     public static void init() {
         UseBlockCallback.EVENT.register((playerEntity, world, hand, blockHitResult) -> {
-            if (!playerEntity.getStackInHand(hand).isEmpty() && WrenchUtilities.isWrench(playerEntity.getStackInHand(hand).getItem())) {
-                if (world.getBlockState(blockHitResult.getBlockPos()).getBlock() instanceof BlockWrenchable) {
-                    Wrench wrench = WrenchUtilities.getWrench(playerEntity.getStackInHand(hand).getItem());
+            ItemStack heldStack = playerEntity.getStackInHand(hand);
+            BlockPos pos = blockHitResult.getBlockPos();
+            BlockEntity blockEntity = world.getBlockEntity(pos);
 
-                    wrench.onWrenched(world, playerEntity.getStackInHand(hand), playerEntity, blockHitResult);
-                    ((BlockWrenchable) world.getBlockState(blockHitResult.getBlockPos()).getBlock()).onWrenched(world, playerEntity, blockHitResult);
+            if (!heldStack.isEmpty() && WrenchUtilities.isWrench(heldStack.getItem())) {
+                Wrench wrench = WrenchUtilities.getWrench(heldStack.getItem());
+                
+                if (world.getBlockState(pos).getBlock() instanceof BlockWrenchable) {
+                    wrench.onBlockWrenched(world, heldStack, playerEntity, blockHitResult);
+                    ((BlockWrenchable) world.getBlockState(pos).getBlock()).onWrenched(world, playerEntity, blockHitResult);
 
-                    if (world.getBlockEntity(blockHitResult.getBlockPos()) != null && world.getBlockEntity(blockHitResult.getBlockPos()) instanceof BlockWrenchable) {
-                        ((BlockWrenchable) world.getBlockEntity(blockHitResult.getBlockPos())).onWrenched(world, playerEntity, blockHitResult);
+                    if (blockEntity != null && blockEntity instanceof BlockWrenchable) {
+                        ((BlockWrenchable) blockEntity).onWrenched(world, playerEntity, blockHitResult);
+                        wrench.onBlockEntityWrenched(world, heldStack, playerEntity, blockEntity, blockHitResult);
                     }
 
                     return ActionResult.SUCCESS;
-                } else if (world.getBlockEntity(blockHitResult.getBlockPos()) != null && world.getBlockEntity(blockHitResult.getBlockPos()) instanceof BlockWrenchable) {
-                    Wrench wrench = WrenchUtilities.getWrench(playerEntity.getStackInHand(hand).getItem());
-
-                    wrench.onWrenched(world, playerEntity.getStackInHand(hand), playerEntity, blockHitResult);
-                    ((BlockWrenchable) world.getBlockEntity(blockHitResult.getBlockPos())).onWrenched(world, playerEntity, blockHitResult);
+                } else if (blockEntity != null && blockEntity instanceof BlockWrenchable) {
+                    wrench.onBlockWrenched(world, heldStack, playerEntity, blockHitResult);
+                    wrench.onBlockEntityWrenched(world, heldStack, playerEntity, blockEntity, blockHitResult);
+                    ((BlockWrenchable) blockEntity).onWrenched(world, playerEntity, blockHitResult);
 
                     return ActionResult.SUCCESS;
-                } else if (WrenchableRegistry.isBlockWrenchable(world.getBlockState(blockHitResult.getBlockPos()).getBlock())) {
-                    BlockListener wrenchable = WrenchableRegistry.getBlockWrenchable(world.getBlockState(blockHitResult.getBlockPos()).getBlock());
-                    Wrench wrench = WrenchUtilities.getWrench(playerEntity.getStackInHand(hand).getItem());
+                } else if (WrenchableRegistry.isBlockWrenchable(world.getBlockState(pos).getBlock())) {
+                    BlockListener wrenchable = WrenchableRegistry.getBlockWrenchable(world.getBlockState(pos).getBlock());
 
-                    wrench.onWrenched(world, playerEntity.getStackInHand(hand), playerEntity, blockHitResult);
-
+                    wrench.onBlockWrenched(world, heldStack, playerEntity, blockHitResult);
                     wrenchable.onWrenched(world, playerEntity, blockHitResult);
 
                     return ActionResult.SUCCESS;
-                } if (WrenchableRegistry.isBlockInstanceWrenchable(world.getBlockState(blockHitResult.getBlockPos()).getBlock())) {
-                    Wrench wrench = WrenchUtilities.getWrench(playerEntity.getStackInHand(hand).getItem());
-
-                    wrench.onWrenched(world, playerEntity.getStackInHand(hand), playerEntity, blockHitResult);
-                    WrenchableRegistry.getBlockInstanceWrenchable(world.getBlockState(blockHitResult.getBlockPos()).getBlock()).onWrenched(world, playerEntity, blockHitResult);
+                } if (WrenchableRegistry.isBlockInstanceWrenchable(world.getBlockState(pos).getBlock())) {
+                    wrench.onBlockWrenched(world, heldStack, playerEntity, blockHitResult);
+                    WrenchableRegistry.getBlockInstanceWrenchable(world.getBlockState(pos).getBlock()).onWrenched(world, playerEntity, blockHitResult);
 
                     return ActionResult.SUCCESS;
                 } else {
                     for (PropertyListener wrenchable : WrenchableRegistry.PROPERTY_LISTENERS) {
-                        if (world.getBlockState(blockHitResult.getBlockPos()).contains(wrenchable.getProperty())) {
-                            Wrench wrench = WrenchUtilities.getWrench(playerEntity.getStackInHand(hand).getItem());
-
-                            wrench.onWrenched(world, playerEntity.getStackInHand(hand), playerEntity, blockHitResult);
-
+                        if (world.getBlockState(pos).contains(wrenchable.getProperty())) {
+                            wrench.onBlockWrenched(world, heldStack, playerEntity, blockHitResult);
                             wrenchable.onWrenched(world, playerEntity, blockHitResult);
 
                             return ActionResult.SUCCESS;
@@ -67,12 +67,16 @@ public class WrenchableEvents {
         });
 
         UseEntityCallback.EVENT.register(((playerEntity, world, hand, entity, entityHitResult) -> {
-            if (!playerEntity.getStackInHand(hand).isEmpty() && WrenchUtilities.isWrench(playerEntity.getStackInHand(hand).getItem())) {
+            ItemStack heldStack = playerEntity.getStackInHand(hand);
+
+            if (!heldStack.isEmpty() && WrenchUtilities.isWrench(heldStack.getItem())) {
+                Wrench wrench = WrenchUtilities.getWrench(heldStack.getItem());
+                
                 if (entity instanceof EntityWrenchable) {
-                    WrenchUtilities.getWrench(playerEntity.getStackInHand(hand).getItem());
+                    wrench.onEntityWrenched(world, heldStack, playerEntity, entityHitResult);
                     ((EntityWrenchable) entity).onWrenched(world, playerEntity, entityHitResult);
                 } else if (WrenchableRegistry.isEntityTypeWrenchable(entity)) {
-                    WrenchUtilities.getWrench(playerEntity.getStackInHand(hand).getItem());
+                    wrench.onEntityWrenched(world, heldStack, playerEntity, entityHitResult);
                     WrenchableRegistry.getEntityTypeWrenchable(entity).onWrenched(world, playerEntity, entityHitResult);
                 }
             }
