@@ -12,7 +12,7 @@ public class WrenchListener implements Wrench {
     }
 
     public WrenchListener(Identifier identifier) {
-        this.item = Registry.ITEM.get(identifier);
+        this(Registry.ITEM.get(identifier));
     }
 
     public Item getItem() {

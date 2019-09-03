@@ -17,6 +17,8 @@ import net.minecraft.util.registry.Registry;
 public class WrenchableMain implements ModInitializer {
     public static String MODID = "wrenchable";
 
+    public static WrenchListener STICK_LISTENER;
+
     public static InstanceListener SIGN_LISTENER;
     public static InstanceListener END_PORTAL_FRAME_LISTENER;
 
@@ -26,6 +28,8 @@ public class WrenchableMain implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+	    STICK_LISTENER = Registry.register(WrenchableRegistry.WRENCH_LISTENERS, new Identifier(MODID, "stick"), new WrenchListener(Items.STICK));
+
 	    SIGN_LISTENER = Registry.register(WrenchableRegistry.BLOCK_INSTANCE_LISTENERS, new Identifier(MODID, "sign"), new SignInstanceListener());
 
         END_PORTAL_FRAME_LISTENER = Registry.register(WrenchableRegistry.BLOCK_INSTANCE_LISTENERS, new Identifier(MODID, "eye"), new EndPortalFrameInstanceListener());
