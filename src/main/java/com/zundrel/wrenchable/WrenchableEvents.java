@@ -27,13 +27,13 @@ public class WrenchableEvents {
                     wrench.onBlockWrenched(world, heldStack, playerEntity, blockHitResult);
                     ((BlockWrenchable) world.getBlockState(pos).getBlock()).onWrenched(world, playerEntity, blockHitResult);
 
-                    if (blockEntity != null && blockEntity instanceof BlockWrenchable) {
+                    if (blockEntity instanceof BlockWrenchable) {
                         ((BlockWrenchable) blockEntity).onWrenched(world, playerEntity, blockHitResult);
                         wrench.onBlockEntityWrenched(world, heldStack, playerEntity, blockEntity, blockHitResult);
                     }
 
                     return ActionResult.SUCCESS;
-                } else if (blockEntity != null && blockEntity instanceof BlockWrenchable) {
+                } else if (blockEntity instanceof BlockWrenchable) {
                     wrench.onBlockWrenched(world, heldStack, playerEntity, blockHitResult);
                     wrench.onBlockEntityWrenched(world, heldStack, playerEntity, blockEntity, blockHitResult);
                     ((BlockWrenchable) blockEntity).onWrenched(world, playerEntity, blockHitResult);
