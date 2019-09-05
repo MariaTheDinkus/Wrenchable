@@ -22,16 +22,14 @@ public class SlabTypePropertyListener extends PropertyListener {
         BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
 
-        if (ModKeys.isControlPressed(player)) {
-            if (state.get(Properties.SLAB_TYPE) == SlabType.BOTTOM) {
-                world.setBlockState(pos, state.with(Properties.SLAB_TYPE, SlabType.TOP));
-                world.updateNeighbor(pos, block, pos);
-                return;
-            } else if (state.get(Properties.SLAB_TYPE) == SlabType.TOP) {
-                world.setBlockState(pos, state.with(Properties.SLAB_TYPE, SlabType.BOTTOM));
-                world.updateNeighbor(pos, block, pos);
-                return;
-            }
+        if (state.get(Properties.SLAB_TYPE) == SlabType.BOTTOM) {
+            world.setBlockState(pos, state.with(Properties.SLAB_TYPE, SlabType.TOP));
+            world.updateNeighbor(pos, block, pos);
+            return;
+        } else if (state.get(Properties.SLAB_TYPE) == SlabType.TOP) {
+            world.setBlockState(pos, state.with(Properties.SLAB_TYPE, SlabType.BOTTOM));
+            world.updateNeighbor(pos, block, pos);
+            return;
         }
     }
 }
