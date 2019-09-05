@@ -1,15 +1,13 @@
 package com.zundrel.wrenchable.block.defaults;
 
 import com.zundrel.wrenchable.block.InstanceListener;
+import com.zundrel.wrenchable.wrench.WrenchableUtilities;
 import grondag.fermion.modkeys.api.ModKeys;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.BlockRotation;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class SignInstanceListener extends InstanceListener {
@@ -32,49 +30,9 @@ public class SignInstanceListener extends InstanceListener {
         }
 
         if (block instanceof SignBlock) {
-            if (ModKeys.isAltPressed(player)) {
-                world.setBlockState(pos, state.with(Properties.ROTATION, MathHelper.floor((double)((180.0F + player.yaw) * 16.0F / 360.0F) + 0.5D) & 15));
-                world.updateNeighbor(pos, block, pos);
-                return;
-            }
-
-            if (player.isSneaking()) {
-                if (state.get(Properties.ROTATION) > 0) {
-                    world.setBlockState(pos, state.with(Properties.ROTATION, state.get(Properties.ROTATION) - 1));
-                } else {
-                    world.setBlockState(pos, state.with(Properties.ROTATION, 15));
-                }
-
-                world.updateNeighbor(pos, block, pos);
-                return;
-            } else {
-                if (state.get(Properties.ROTATION) < 15) {
-                    world.setBlockState(pos, state.with(Properties.ROTATION, state.get(Properties.ROTATION) + 1));
-                } else {
-                    world.setBlockState(pos, state.with(Properties.ROTATION, 0));
-                }
-
-                world.updateNeighbor(pos, block, pos);
-                return;
-            }
+            WrenchableUtilities.doRotationBehavior(world, player, result);
         } else if (block instanceof WallSignBlock) {
-            if (player.isSneaking()) {
-                if (!state.rotate(BlockRotation.COUNTERCLOCKWISE_90).canPlaceAt(world, pos))
-                    return;
-
-                world.setBlockState(pos, state.rotate(BlockRotation.COUNTERCLOCKWISE_90));
-
-                world.updateNeighbor(pos, block, pos);
-                return;
-            } else {
-                if (!state.rotate(BlockRotation.CLOCKWISE_90).canPlaceAt(world, pos))
-                    return;
-
-                world.setBlockState(pos, state.rotate(BlockRotation.CLOCKWISE_90));
-
-                world.updateNeighbor(pos, block, pos);
-                return;
-            }
+            WrenchableUtilities.doHorizontalFacingBehavior(world, player, result);
         }
     }
 }

@@ -4,7 +4,7 @@ import com.zundrel.wrenchable.block.BlockListener;
 import com.zundrel.wrenchable.block.PropertyListener;
 import com.zundrel.wrenchable.wrench.EntityWrenchable;
 import com.zundrel.wrenchable.wrench.Wrench;
-import com.zundrel.wrenchable.wrench.WrenchUtilities;
+import com.zundrel.wrenchable.wrench.WrenchableUtilities;
 import com.zundrel.wrenchable.wrench.BlockWrenchable;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
@@ -20,8 +20,8 @@ public class WrenchableEvents {
             BlockPos pos = blockHitResult.getBlockPos();
             BlockEntity blockEntity = world.getBlockEntity(pos);
 
-            if (!heldStack.isEmpty() && WrenchUtilities.isWrench(heldStack.getItem())) {
-                Wrench wrench = WrenchUtilities.getWrench(heldStack.getItem());
+            if (!heldStack.isEmpty() && WrenchableUtilities.isWrench(heldStack.getItem())) {
+                Wrench wrench = WrenchableUtilities.getWrench(heldStack.getItem());
                 
                 if (world.getBlockState(pos).getBlock() instanceof BlockWrenchable) {
                     wrench.onBlockWrenched(world, heldStack, playerEntity, blockHitResult);
@@ -69,8 +69,8 @@ public class WrenchableEvents {
         UseEntityCallback.EVENT.register(((playerEntity, world, hand, entity, entityHitResult) -> {
             ItemStack heldStack = playerEntity.getStackInHand(hand);
 
-            if (!heldStack.isEmpty() && WrenchUtilities.isWrench(heldStack.getItem())) {
-                Wrench wrench = WrenchUtilities.getWrench(heldStack.getItem());
+            if (!heldStack.isEmpty() && WrenchableUtilities.isWrench(heldStack.getItem())) {
+                Wrench wrench = WrenchableUtilities.getWrench(heldStack.getItem());
                 
                 if (entity instanceof EntityWrenchable) {
                     wrench.onEntityWrenched(world, heldStack, playerEntity, entityHitResult);

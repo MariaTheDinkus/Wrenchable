@@ -7,13 +7,13 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.world.World;
 
-public class FacingPropertyListener extends PropertyListener {
-    public FacingPropertyListener() {
-        super(Properties.FACING);
+public class HorizontalFacingPropertyListener extends PropertyListener {
+    public HorizontalFacingPropertyListener() {
+        super(Properties.HORIZONTAL_FACING);
     }
 
     @Override
     public void onWrenched(World world, PlayerEntity player, BlockHitResult result) {
-        WrenchableUtilities.doFacingBehavior(world, player, result);
+        WrenchableUtilities.doHorizontalFacingBehavior(world, player, result);
     }
 }
