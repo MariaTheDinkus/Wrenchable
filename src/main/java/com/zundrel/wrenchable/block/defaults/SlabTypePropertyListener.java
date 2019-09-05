@@ -1,7 +1,6 @@
 package com.zundrel.wrenchable.block.defaults;
 
 import com.zundrel.wrenchable.block.PropertyListener;
-import grondag.fermion.modkeys.api.ModKeys;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.SlabType;

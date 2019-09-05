@@ -38,37 +38,37 @@ public class WrenchableEvents {
                 Wrench wrench = WrenchableUtilities.getWrench(heldStack.getItem());
                 
                 if (world.getBlockState(pos).getBlock() instanceof BlockWrenchable) {
-                    wrench.onBlockWrenched(world, heldStack, playerEntity, blockHitResult);
+                    wrench.onBlockWrenched(world, heldStack, playerEntity, hand, blockHitResult);
                     ((BlockWrenchable) world.getBlockState(pos).getBlock()).onWrenched(world, playerEntity, blockHitResult);
 
                     if (blockEntity instanceof BlockWrenchable) {
                         ((BlockWrenchable) blockEntity).onWrenched(world, playerEntity, blockHitResult);
-                        wrench.onBlockEntityWrenched(world, heldStack, playerEntity, blockEntity, blockHitResult);
+                        wrench.onBlockEntityWrenched(world, heldStack, playerEntity, hand, blockEntity, blockHitResult);
                     }
 
                     return ActionResult.SUCCESS;
                 } else if (blockEntity instanceof BlockWrenchable) {
-                    wrench.onBlockWrenched(world, heldStack, playerEntity, blockHitResult);
-                    wrench.onBlockEntityWrenched(world, heldStack, playerEntity, blockEntity, blockHitResult);
+                    wrench.onBlockWrenched(world, heldStack, playerEntity, hand, blockHitResult);
+                    wrench.onBlockEntityWrenched(world, heldStack, playerEntity, hand, blockEntity, blockHitResult);
                     ((BlockWrenchable) blockEntity).onWrenched(world, playerEntity, blockHitResult);
 
                     return ActionResult.SUCCESS;
                 } else if (WrenchableRegistry.isBlockWrenchable(world.getBlockState(pos).getBlock())) {
                     BlockListener wrenchable = WrenchableRegistry.getBlockWrenchable(world.getBlockState(pos).getBlock());
 
-                    wrench.onBlockWrenched(world, heldStack, playerEntity, blockHitResult);
+                    wrench.onBlockWrenched(world, heldStack, playerEntity, hand, blockHitResult);
                     wrenchable.onWrenched(world, playerEntity, blockHitResult);
 
                     return ActionResult.SUCCESS;
                 } if (WrenchableRegistry.isBlockInstanceWrenchable(world.getBlockState(pos).getBlock())) {
-                    wrench.onBlockWrenched(world, heldStack, playerEntity, blockHitResult);
+                    wrench.onBlockWrenched(world, heldStack, playerEntity, hand, blockHitResult);
                     WrenchableRegistry.getBlockInstanceWrenchable(world.getBlockState(pos).getBlock()).onWrenched(world, playerEntity, blockHitResult);
 
                     return ActionResult.SUCCESS;
                 } else {
                     for (PropertyListener wrenchable : WrenchableRegistry.PROPERTY_LISTENERS) {
                         if (world.getBlockState(pos).contains(wrenchable.getProperty())) {
-                            wrench.onBlockWrenched(world, heldStack, playerEntity, blockHitResult);
+                            wrench.onBlockWrenched(world, heldStack, playerEntity, hand, blockHitResult);
                             wrenchable.onWrenched(world, playerEntity, blockHitResult);
 
                             return ActionResult.SUCCESS;
@@ -87,10 +87,10 @@ public class WrenchableEvents {
                 Wrench wrench = WrenchableUtilities.getWrench(heldStack.getItem());
                 
                 if (entity instanceof EntityWrenchable) {
-                    wrench.onEntityWrenched(world, heldStack, playerEntity, entityHitResult);
+                    wrench.onEntityWrenched(world, heldStack, playerEntity, hand, entityHitResult);
                     ((EntityWrenchable) entity).onWrenched(world, playerEntity, entityHitResult);
                 } else if (WrenchableRegistry.isEntityTypeWrenchable(entity)) {
-                    wrench.onEntityWrenched(world, heldStack, playerEntity, entityHitResult);
+                    wrench.onEntityWrenched(world, heldStack, playerEntity, hand, entityHitResult);
                     WrenchableRegistry.getEntityTypeWrenchable(entity).onWrenched(world, playerEntity, entityHitResult);
                 }
             }

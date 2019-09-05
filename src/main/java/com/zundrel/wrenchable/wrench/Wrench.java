@@ -3,6 +3,7 @@ package com.zundrel.wrenchable.wrench;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.World;
@@ -16,7 +17,7 @@ public interface Wrench {
      * @param result Information about the block that was wrenched.
      * @author Zundrel
      */
-    default void onBlockWrenched(World world, ItemStack stack, PlayerEntity player, BlockHitResult result) {};
+    default void onBlockWrenched(World world, ItemStack stack, PlayerEntity player, Hand hand, BlockHitResult result) {};
 
     /**
      * This method is called when a block is wrenched. Do not do durability handling in this method.
@@ -27,7 +28,7 @@ public interface Wrench {
      * @param result Information about the block that was wrenched.
      * @author Zundrel
      */
-    default void onBlockEntityWrenched(World world, ItemStack stack, PlayerEntity player, BlockEntity blockEntity, BlockHitResult result) {};
+    default void onBlockEntityWrenched(World world, ItemStack stack, PlayerEntity player, Hand hand, BlockEntity blockEntity, BlockHitResult result) {};
 
     /**
      * This method is called when an entity is wrenched. Durability handling should be done in this method.
@@ -37,5 +38,5 @@ public interface Wrench {
      * @param result Information about the entity that was wrenched.
      * @author Zundrel
      */
-    default void onEntityWrenched(World world, ItemStack stack, PlayerEntity player, EntityHitResult result) {};
+    default void onEntityWrenched(World world, ItemStack stack, PlayerEntity player, Hand hand, EntityHitResult result) {};
 }
