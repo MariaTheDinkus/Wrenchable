@@ -2,14 +2,19 @@ package com.zundrel.wrenchable;
 
 import com.zundrel.wrenchable.block.BlockListener;
 import com.zundrel.wrenchable.block.PropertyListener;
-import com.zundrel.wrenchable.wrench.EntityWrenchable;
+import com.zundrel.wrenchable.config.WrenchableConfig;
+import com.zundrel.wrenchable.entity.EntityWrenchable;
 import com.zundrel.wrenchable.wrench.Wrench;
-import com.zundrel.wrenchable.wrench.WrenchableUtilities;
-import com.zundrel.wrenchable.wrench.BlockWrenchable;
+import com.zundrel.wrenchable.block.BlockWrenchable;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 
@@ -19,6 +24,15 @@ public class WrenchableEvents {
             ItemStack heldStack = playerEntity.getStackInHand(hand);
             BlockPos pos = blockHitResult.getBlockPos();
             BlockEntity blockEntity = world.getBlockEntity(pos);
+
+            if (WrenchableConfig.pistonSlime && !heldStack.isEmpty() && heldStack.getItem() == Items.SLIME_BALL && world.getBlockState(pos).getBlock() == Blocks.PISTON) {
+                if (!world.getBlockState(pos).get(Properties.EXTENDED)) {
+                    world.setBlockState(pos, Blocks.STICKY_PISTON.getDefaultState().with(Properties.FACING, world.getBlockState(pos).get(Properties.FACING)));
+                    world.playSound(null, pos, SoundEvents.ENTITY_SLIME_SQUISH, SoundCategory.BLOCKS, 1, 1F);
+                    if (!playerEntity.isCreative())
+                        heldStack.decrement(1);
+                }
+            }
 
             if (!heldStack.isEmpty() && WrenchableUtilities.isWrench(heldStack.getItem())) {
                 Wrench wrench = WrenchableUtilities.getWrench(heldStack.getItem());

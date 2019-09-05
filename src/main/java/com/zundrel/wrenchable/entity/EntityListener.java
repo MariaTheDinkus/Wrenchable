@@ -1,6 +1,5 @@
 package com.zundrel.wrenchable.entity;
 
-import com.zundrel.wrenchable.wrench.EntityWrenchable;
 import net.minecraft.entity.EntityType;
 
 public abstract class EntityListener implements EntityWrenchable {

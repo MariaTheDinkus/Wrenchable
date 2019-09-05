@@ -1,6 +1,7 @@
-package com.zundrel.wrenchable.wrench;
+package com.zundrel.wrenchable;
 
 import com.zundrel.wrenchable.WrenchableRegistry;
+import com.zundrel.wrenchable.wrench.Wrench;
 import grondag.fermion.modkeys.api.ModKeys;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

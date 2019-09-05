@@ -1,21 +1,15 @@
 package com.zundrel.wrenchable.block.defaults;
 
 import com.zundrel.wrenchable.block.InstanceListener;
-import com.zundrel.wrenchable.wrench.WrenchableUtilities;
+import com.zundrel.wrenchable.WrenchableUtilities;
 import grondag.fermion.modkeys.api.ModKeys;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DoorBlock;
-import net.minecraft.block.EndPortalFrameBlock;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 public class DoorInstanceListener extends InstanceListener {

@@ -1,10 +1,9 @@
 package com.zundrel.wrenchable.block.defaults;
 
 import com.zundrel.wrenchable.block.InstanceListener;
-import com.zundrel.wrenchable.wrench.WrenchableUtilities;
+import com.zundrel.wrenchable.WrenchableUtilities;
 import grondag.fermion.modkeys.api.ModKeys;
 import net.minecraft.block.*;
-import net.minecraft.block.enums.PistonType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;

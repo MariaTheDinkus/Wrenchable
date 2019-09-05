@@ -23,6 +23,8 @@ repositories {
             password ""
 		}
     }
+	maven { url 'http://server.bbkr.space:8081/artifactory/libs-release' }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -31,6 +33,9 @@ dependencies {
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	
+	modImplementation "com.github.indi-code:TinyConfig:${project.tiny_config_version}"
+    include "com.github.indi-code:TinyConfig:${project.tiny_config_version}"
 
 	modImplementation ("grondag:fermion-modkeys:${project.fermion_modkeys_version}.+") {
         exclude group :"grondag"

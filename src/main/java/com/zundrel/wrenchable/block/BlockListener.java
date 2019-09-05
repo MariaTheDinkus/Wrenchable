@@ -1,6 +1,5 @@
 package com.zundrel.wrenchable.block;
 
-import com.zundrel.wrenchable.wrench.BlockWrenchable;
 import net.minecraft.block.Block;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;

@@ -1,4 +1,4 @@
-package com.zundrel.wrenchable.wrench;
+package com.zundrel.wrenchable.entity;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.hit.EntityHitResult;
