@@ -71,6 +71,44 @@ public class WrenchableUtilities {
     }
 
     /**
+     * This method causes the default Properties.HOPPER_FACING behavior to run.
+     * @param world An instance of the world where this block was wrenched.
+     * @param player The player who wrenched this block.
+     * @param result Information about the block that was wrenched.
+     * @author Zundrel
+     */
+    public static void doHopperFacingBehavior(World world, PlayerEntity player, BlockHitResult result) {
+        BlockPos pos = result.getBlockPos();
+        BlockState state = world.getBlockState(pos);
+        Block block = state.getBlock();
+        Direction direction = state.get(Properties.HOPPER_FACING);
+
+        if (ModKeys.isAltPressed(player)) {
+            if (result.getSide() != Direction.UP) {
+                world.setBlockState(pos, state.with(Properties.HOPPER_FACING, result.getSide()));
+                world.updateNeighbor(pos, block, pos);
+                return;
+            } else {
+                world.setBlockState(pos, state.with(Properties.HOPPER_FACING, Direction.DOWN));
+                world.updateNeighbor(pos, block, pos);
+                return;
+            }
+        }
+
+        if (result.getSide() == Direction.UP) {
+            world.setBlockState(pos, state.with(Properties.HOPPER_FACING, Direction.DOWN));
+            world.updateNeighbor(pos, block, pos);
+            return;
+        } else if (state.get(Properties.HOPPER_FACING) == Direction.DOWN) {
+            world.setBlockState(pos, state.with(Properties.HOPPER_FACING, Direction.NORTH));
+            world.updateNeighbor(pos, block, pos);
+            return;
+        }
+
+        rotateState(world, player, state, pos);
+    }
+
+    /**
      * This method causes basic rotation behavior for a BlockState to occur.
      * I don't recommend using this, instead use doFacingBehavior or doHorizontalFacingBehavior.
      * @param world An instance of the world where this block was wrenched.
