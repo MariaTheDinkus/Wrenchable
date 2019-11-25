@@ -7,8 +7,8 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 dependencies {
-    modImplementation 'com.github.Zundrel:Wrenchable:LATEST'
-    include 'com.github.Zundrel:Wrenchable:LATEST'
+    modImplementation 'com.github.Zundrel:wrenchable:LATEST'
+    include 'com.github.Zundrel:wrenchable:LATEST'
 }
 ```
 Where `LATEST` is the latest tag under the releases tab.
