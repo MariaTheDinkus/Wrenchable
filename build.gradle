@@ -45,7 +45,7 @@ dependencies {
     include "grondag:fermion-modkeys:${project.fermion_modkeys_version}+"
 	
 	// Just using this for testing.
-	modRuntime curse.resolve("wrench-anything", "2778678")
+	// modRuntime curse.resolve("wrench-anything", "2778678")
 	
 	modRuntime ("io.github.prospector:modmenu:${project.modmenu_version}") {
         exclude group :"net.fabricmc.fabric-api"
