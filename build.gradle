@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.2.5-SNAPSHOT'
+	id 'fabric-loom' version '0.2.6-SNAPSHOT'
 	id 'maven-publish'
 	id "com.wynprice.cursemaven" version "1.2.2"
 }
@@ -38,11 +38,11 @@ dependencies {
 	modImplementation "com.github.indi-code:TinyConfig:${project.tiny_config_version}"
     include "com.github.indi-code:TinyConfig:${project.tiny_config_version}"
 
-	modImplementation ("grondag:fermion-modkeys:${project.fermion_modkeys_version}.+") {
+	modImplementation ("grondag:fermion-modkeys:${project.fermion_modkeys_version}+") {
         exclude group :"grondag"
         exclude group :"net.fabricmc.fabric-api"
     }
-    include "grondag:fermion-modkeys:${project.fermion_modkeys_version}.+"
+    include "grondag:fermion-modkeys:${project.fermion_modkeys_version}+"
 	
 	// Just using this for testing.
 	modRuntime curse.resolve("wrench-anything", "2778678")
