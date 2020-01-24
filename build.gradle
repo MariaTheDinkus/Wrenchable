@@ -8,7 +8,7 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 archivesBaseName = project.archives_base_name
-version = project.mod_version
+version = "${project.mod_version}+${project.minecraft_version}"
 group = project.maven_group
 
 minecraft {
@@ -30,7 +30,7 @@ repositories {
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
@@ -38,18 +38,11 @@ dependencies {
 	modImplementation "com.github.voidpointerdev:TinyConfig:${project.tiny_config_version}"
     include "com.github.voidpointerdev:TinyConfig:${project.tiny_config_version}"
 
-	modImplementation ("grondag:fermion-modkeys:${project.fermion_modkeys_version}+") {
+	modImplementation ("grondag:fermion-modkeys-mc115:${project.fermion_modkeys_version}") {
         exclude group :"grondag"
         exclude group :"net.fabricmc.fabric-api"
     }
-    include "grondag:fermion-modkeys:${project.fermion_modkeys_version}+"
-	
-	// Just using this for testing.
-	// modRuntime curse.resolve("wrench-anything", "2778678")
-	
-	modRuntime ("io.github.prospector:modmenu:${project.modmenu_version}") {
-        exclude group :"net.fabricmc.fabric-api"
-	}
+    include "grondag:fermion-modkeys-mc115:${project.fermion_modkeys_version}"
 }
 
 processResources {
