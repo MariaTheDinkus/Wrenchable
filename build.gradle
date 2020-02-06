@@ -42,7 +42,7 @@ dependencies {
         exclude group :"grondag"
         exclude group :"net.fabricmc.fabric-api"
     }
-    include "grondag:fermion-modkeys-mc115:${project.fermion_modkeys_version}"
+    include "grondag:fermion-modkeys-mc116:${project.fermion_modkeys_version}"
 }
 
 processResources {
