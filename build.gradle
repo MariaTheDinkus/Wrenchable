@@ -38,7 +38,7 @@ dependencies {
 	modImplementation "com.github.voidpointerdev:TinyConfig:${project.tiny_config_version}"
     include "com.github.voidpointerdev:TinyConfig:${project.tiny_config_version}"
 
-	modImplementation ("grondag:fermion-modkeys-mc115:${project.fermion_modkeys_version}") {
+	modImplementation ("grondag:fermion-modkeys-mc116:${project.fermion_modkeys_version}") {
         exclude group :"grondag"
         exclude group :"net.fabricmc.fabric-api"
     }
