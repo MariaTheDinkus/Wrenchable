@@ -1,15 +1,36 @@
 plugins {
 	id 'fabric-loom' version '0.2.7-SNAPSHOT'
+	id "com.jfrog.bintray" version "1.8.4"
 	id 'maven-publish'
-	id "com.wynprice.cursemaven" version "1.2.2"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
+if(rootProject.file('private.gradle').exists()) { //Publishing details
+	apply from: 'private.gradle'
+}
+
 archivesBaseName = project.archives_base_name
 version = "${project.mod_version}+${project.minecraft_version}"
 group = project.maven_group
+
+bintray {
+	user = System.getenv("BINTRAY_USER")
+	key = System.getenv("BINTRAY_KEY")
+	publications = ['WrenchablePublication']
+	pkg {
+		repo = 'wrenchable'
+		name = archives_base_name
+		licenses = ['MIT']
+		vcsUrl = 'https://github.com/Zundrel/Wrenchable.git'
+		version {
+			name = project.mod_version + "+" + project.minecraft_version
+			released  = new Date()
+			vcsTag = project.mod_version + "+" + project.minecraft_version
+		}
+	}
+}
 
 minecraft {
 }
@@ -24,8 +45,6 @@ repositories {
             password ""
 		}
     }
-	maven { url 'http://server.bbkr.space:8081/artifactory/libs-release' }
-    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -69,27 +88,33 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 	from sourceSets.main.allSource
 }
 
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	classifier = 'javadoc'
+	from javadoc.destinationDir
+}
+
 jar {
 	from "LICENSE"
 }
 
-// configure the maven publication
 publishing {
 	publications {
-		mavenJava(MavenPublication) {
-			// add all the jars that should be included when publishing to maven
+		WrenchablePublication(MavenPublication) {
+			groupId 'com.zundrel'
+			artifactId 'wrenchable'
+			version project.mod_version + "+" + project.minecraft_version
+
 			artifact(remapJar) {
 				builtBy remapJar
 			}
 			artifact(sourcesJar) {
 				builtBy remapSourcesJar
 			}
+			artifact javadocJar
 		}
 	}
 
-	// select the repositories you want to publish to
 	repositories {
-		// uncomment to publish to the local maven
-		// mavenLocal()
+		mavenLocal()
 	}
 }

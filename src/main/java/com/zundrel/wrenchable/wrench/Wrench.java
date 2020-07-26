@@ -14,6 +14,7 @@ public interface Wrench {
      * @param world An instance of the world where this block was wrenched.
      * @param stack The wrench ItemStack which the player is currently holding.
      * @param player The player who wrenched this block.
+     * @param hand The hand which is holding the wrench.
      * @param result Information about the block that was wrenched.
      * @author Zundrel
      */
@@ -24,6 +25,7 @@ public interface Wrench {
      * @param world An instance of the world where this block was wrenched.
      * @param stack The wrench ItemStack which the player is currently holding.
      * @param player The player who wrenched this block.
+     * @param hand The hand which is holding the wrench.
      * @param blockEntity The BlockEntity of the block that was wrenched.
      * @param result Information about the block that was wrenched.
      * @author Zundrel
@@ -35,6 +37,7 @@ public interface Wrench {
      * @param world An instance of the world where this entity was wrenched.
      * @param stack The wrench ItemStack which the player is currently holding.
      * @param player The player who wrenched this entity.
+     * @param hand The hand which is holding the wrench.
      * @param result Information about the entity that was wrenched.
      * @author Zundrel
      */
