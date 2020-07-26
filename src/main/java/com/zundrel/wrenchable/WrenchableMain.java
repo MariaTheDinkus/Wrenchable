@@ -3,10 +3,11 @@ package com.zundrel.wrenchable;
 import com.zundrel.wrenchable.block.InstanceListener;
 import com.zundrel.wrenchable.block.PropertyListener;
 import com.zundrel.wrenchable.block.defaults.*;
-import com.zundrel.wrenchable.config.WrenchableConfig;
+import com.zundrel.wrenchable.wrench.WrenchListener;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BedBlock;
-import net.minecraft.block.entity.BedBlockEntity;
+import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -28,7 +29,9 @@ public class WrenchableMain implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-	    WrenchableConfig.init();
+        if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
+            Registry.register(WrenchableRegistry.WRENCH_LISTENERS, new Identifier(MODID, "stick"), new WrenchListener(Items.STICK));
+        }
 
 	    BED_LISTENER = Registry.register(WrenchableRegistry.BLOCK_INSTANCE_LISTENERS, new Identifier(MODID, "bed"), new NoBehaviorInstanceListener(BedBlock.class));
 

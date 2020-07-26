@@ -34,9 +34,6 @@ dependencies {
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	
-	modImplementation "com.github.voidpointerdev:TinyConfig:${project.tiny_config_version}"
-    include "com.github.voidpointerdev:TinyConfig:${project.tiny_config_version}"
 
 	modImplementation ("grondag:fermion-mc116:${project.fermion_version}") { transitive = false }
 	modImplementation ("grondag:fermion-modkeys-mc116:${project.fermion_modkeys_version}") { transitive = false }

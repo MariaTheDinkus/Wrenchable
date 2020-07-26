@@ -26,7 +26,7 @@ public class PistonInstanceListener extends InstanceListener {
         Block block = state.getBlock();
 
         if (!state.get(Properties.EXTENDED)) {
-            if (ModKeys.isControlPressed(player) && block == Blocks.STICKY_PISTON) {
+            if (ModKeys.isPrimaryPressed(player) && block == Blocks.STICKY_PISTON) {
                 world.setBlockState(pos, Blocks.PISTON.getDefaultState().with(Properties.FACING, state.get(Properties.FACING)));
                 world.playSound(null, pos, SoundEvents.ENTITY_SLIME_SQUISH, SoundCategory.BLOCKS, 1, 1F);
                 if (!player.isCreative())

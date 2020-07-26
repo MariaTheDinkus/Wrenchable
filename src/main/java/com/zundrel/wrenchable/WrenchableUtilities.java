@@ -30,7 +30,7 @@ public class WrenchableUtilities {
         Block block = state.getBlock();
         Direction direction = state.get(Properties.FACING);
 
-        if (ModKeys.isAltPressed(player)) {
+        if (ModKeys.isSecondaryPressed(player)) {
             world.setBlockState(pos, state.with(Properties.FACING, result.getSide()));
             world.updateNeighbor(pos, block, pos);
             return;
@@ -58,7 +58,7 @@ public class WrenchableUtilities {
         BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
 
-        if (ModKeys.isAltPressed(player)) {
+        if (ModKeys.isSecondaryPressed(player)) {
             if (!state.with(Properties.HORIZONTAL_FACING, player.getHorizontalFacing().getOpposite()).canPlaceAt(world, pos))
                 return;
 
@@ -83,7 +83,7 @@ public class WrenchableUtilities {
         Block block = state.getBlock();
         Direction direction = state.get(Properties.HOPPER_FACING);
 
-        if (ModKeys.isAltPressed(player)) {
+        if (ModKeys.isSecondaryPressed(player)) {
             if (result.getSide() != Direction.UP) {
                 world.setBlockState(pos, state.with(Properties.HOPPER_FACING, result.getSide()));
                 world.updateNeighbor(pos, block, pos);
@@ -140,7 +140,7 @@ public class WrenchableUtilities {
         BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
 
-        if (ModKeys.isAltPressed(player)) {
+        if (ModKeys.isSecondaryPressed(player)) {
             if (block instanceof SkullBlock)
                 world.setBlockState(pos, state.with(Properties.ROTATION, MathHelper.floor((double)((player.yaw) * 16.0F / 360.0F) + 0.5D) & 15));
             else

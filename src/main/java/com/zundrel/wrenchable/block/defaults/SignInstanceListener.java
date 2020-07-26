@@ -22,9 +22,11 @@ public class SignInstanceListener extends InstanceListener {
         Block block = state.getBlock();
         SignBlockEntity blockEntity = (SignBlockEntity) world.getBlockEntity(pos);
 
-        if (ModKeys.isControlPressed(player) && world.getBlockEntity(result.getBlockPos()) instanceof SignBlockEntity) {
+        if (ModKeys.isPrimaryPressed(player) && world.getBlockEntity(result.getBlockPos()) instanceof SignBlockEntity) {
             blockEntity.setEditor(player);
-            blockEntity.setEditable(true);
+            if (world.isClient()) {
+                blockEntity.setEditable(true);
+            }
             player.openEditSignScreen((SignBlockEntity) world.getBlockEntity(result.getBlockPos()));
             return;
         }

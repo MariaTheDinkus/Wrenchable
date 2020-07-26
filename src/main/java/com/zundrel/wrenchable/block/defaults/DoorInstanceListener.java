@@ -23,7 +23,7 @@ public class DoorInstanceListener extends InstanceListener {
         BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
 
-        if (ModKeys.isControlPressed(player)) {
+        if (ModKeys.isPrimaryPressed(player)) {
             world.setBlockState(pos, state.cycle(Properties.DOOR_HINGE));
             world.updateNeighbor(pos, block, pos);
             return;

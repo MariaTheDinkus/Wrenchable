@@ -2,7 +2,6 @@ package com.zundrel.wrenchable;
 
 import com.zundrel.wrenchable.block.BlockListener;
 import com.zundrel.wrenchable.block.PropertyListener;
-import com.zundrel.wrenchable.config.WrenchableConfig;
 import com.zundrel.wrenchable.entity.EntityWrenchable;
 import com.zundrel.wrenchable.wrench.Wrench;
 import com.zundrel.wrenchable.block.BlockWrenchable;
@@ -25,7 +24,7 @@ public class WrenchableEvents {
             BlockPos pos = blockHitResult.getBlockPos();
             BlockEntity blockEntity = world.getBlockEntity(pos);
 
-            if (WrenchableConfig.pistonSlime && !heldStack.isEmpty() && heldStack.getItem() == Items.SLIME_BALL && world.getBlockState(pos).getBlock() == Blocks.PISTON) {
+            if (!heldStack.isEmpty() && heldStack.getItem() == Items.SLIME_BALL && world.getBlockState(pos).getBlock() == Blocks.PISTON) {
                 if (!world.getBlockState(pos).get(Properties.EXTENDED)) {
                     world.setBlockState(pos, Blocks.STICKY_PISTON.getDefaultState().with(Properties.FACING, world.getBlockState(pos).get(Properties.FACING)));
                     world.playSound(null, pos, SoundEvents.ENTITY_SLIME_SQUISH, SoundCategory.BLOCKS, 1, 1F);

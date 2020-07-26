@@ -22,7 +22,7 @@ public class HorizontalAxisPropertyListener extends PropertyListener {
         BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
 
-        if (ModKeys.isAltPressed(player)) {
+        if (ModKeys.isSecondaryPressed(player)) {
             Direction.Axis axis = Direction.Axis.X;
 
             if (player.getHorizontalFacing() == Direction.NORTH || player.getHorizontalFacing() == Direction.SOUTH)
