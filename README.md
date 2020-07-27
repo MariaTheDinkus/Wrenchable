@@ -9,7 +9,7 @@ maven {
 }
 dependencies {
     modApi 'com.zundrel:wrenchable:LATEST'
-    include 'com.github.Zundrel:wrenchable:LATEST'
+    include 'com.zundrel:wrenchable:LATEST'
 }
 ```
 Where `LATEST` is the latest tag under the releases tab.
