@@ -30,7 +30,7 @@ public class PistonInstanceListener extends InstanceListener {
                 world.setBlockState(pos, Blocks.PISTON.getDefaultState().with(Properties.FACING, state.get(Properties.FACING)));
                 world.playSound(null, pos, SoundEvents.ENTITY_SLIME_SQUISH, SoundCategory.BLOCKS, 1, 1F);
                 if (!player.isCreative())
-                    player.inventory.offerOrDrop(world, new ItemStack(Items.SLIME_BALL));
+                    player.getInventory().offerOrDrop(new ItemStack(Items.SLIME_BALL));
 
                 return;
             }

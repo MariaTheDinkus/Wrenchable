@@ -143,9 +143,9 @@ public class WrenchableUtilities {
 
         if (ModKeys.isSecondaryPressed(player)) {
             if (block instanceof SkullBlock)
-                world.setBlockState(pos, state.with(Properties.ROTATION, MathHelper.floor((double)((player.yaw) * 16.0F / 360.0F) + 0.5D) & 15));
+                world.setBlockState(pos, state.with(Properties.ROTATION, MathHelper.floor((double)((player.headYaw) * 16.0F / 360.0F) + 0.5D) & 15));
             else
-                world.setBlockState(pos, state.with(Properties.ROTATION, MathHelper.floor((double)((180.0F + player.yaw) * 16.0F / 360.0F) + 0.5D) & 15));
+                world.setBlockState(pos, state.with(Properties.ROTATION, MathHelper.floor((double)((180.0F + player.headYaw) * 16.0F / 360.0F) + 0.5D) & 15));
             world.updateNeighbor(pos, block, pos);
             return;
         }
