@@ -8,6 +8,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SkullBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.hit.BlockHitResult;
@@ -142,9 +143,9 @@ public class WrenchableUtilities {
 
         if (ModKeys.isSecondaryPressed(player)) {
             if (block instanceof SkullBlock)
-                world.setBlockState(pos, state.with(Properties.ROTATION, MathHelper.floor((double)((player.yaw) * 16.0F / 360.0F) + 0.5D) & 15));
+                world.setBlockState(pos, state.with(Properties.ROTATION, MathHelper.floor((double)((player.headYaw) * 16.0F / 360.0F) + 0.5D) & 15));
             else
-                world.setBlockState(pos, state.with(Properties.ROTATION, MathHelper.floor((double)((180.0F + player.yaw) * 16.0F / 360.0F) + 0.5D) & 15));
+                world.setBlockState(pos, state.with(Properties.ROTATION, MathHelper.floor((double)((180.0F + player.headYaw) * 16.0F / 360.0F) + 0.5D) & 15));
             world.updateNeighbor(pos, block, pos);
             return;
         }
@@ -170,8 +171,9 @@ public class WrenchableUtilities {
         }
     }
 
-    public static Wrench getWrench(Item item) {
-        if (item instanceof Wrench)
+    public static Wrench getWrench(ItemStack stack) {
+        Item item = stack.getItem();
+        if (item instanceof Wrench && ((Wrench) item).canWrench(stack))
             return (Wrench) item;
         else if (WrenchableRegistry.isWrench(item))
             return WrenchableRegistry.getWrench(item);
@@ -179,7 +181,7 @@ public class WrenchableUtilities {
         return null;
     }
 
-    public static boolean isWrench(Item item) {
-        return item instanceof Wrench || WrenchableRegistry.isWrench(item);
+    public static boolean isWrench(ItemStack stack) {
+        return (stack.getItem() instanceof Wrench && ((Wrench) stack.getItem()).canWrench(stack)) || WrenchableRegistry.isWrench(stack.getItem());
     }
 }

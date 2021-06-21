@@ -42,4 +42,11 @@ public interface Wrench {
      * @author Zundrel
      */
     default void onEntityWrenched(World world, ItemStack stack, PlayerEntity player, Hand hand, EntityHitResult result) {};
+
+    /**
+     * This method determines if a wrench can be used. Good for alternate modes.
+     * @param stack The wrench ItemStack which the player is currently holding.
+     * @author Zundrel
+     */
+    default boolean canWrench(ItemStack stack) { return true; };
 }

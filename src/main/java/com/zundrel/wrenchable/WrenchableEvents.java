@@ -33,8 +33,8 @@ public class WrenchableEvents {
                 }
             }
 
-            if (!heldStack.isEmpty() && WrenchableUtilities.isWrench(heldStack.getItem())) {
-                Wrench wrench = WrenchableUtilities.getWrench(heldStack.getItem());
+            if (!heldStack.isEmpty() && WrenchableUtilities.isWrench(heldStack)) {
+                Wrench wrench = WrenchableUtilities.getWrench(heldStack);
                 
                 if (world.getBlockState(pos).getBlock() instanceof BlockWrenchable) {
                     wrench.onBlockWrenched(world, heldStack, playerEntity, hand, blockHitResult);
@@ -82,8 +82,8 @@ public class WrenchableEvents {
         UseEntityCallback.EVENT.register(((playerEntity, world, hand, entity, entityHitResult) -> {
             ItemStack heldStack = playerEntity.getStackInHand(hand);
 
-            if (!heldStack.isEmpty() && WrenchableUtilities.isWrench(heldStack.getItem())) {
-                Wrench wrench = WrenchableUtilities.getWrench(heldStack.getItem());
+            if (!heldStack.isEmpty() && WrenchableUtilities.isWrench(heldStack)) {
+                Wrench wrench = WrenchableUtilities.getWrench(heldStack);
                 
                 if (entity instanceof EntityWrenchable) {
                     wrench.onEntityWrenched(world, heldStack, playerEntity, hand, entityHitResult);
